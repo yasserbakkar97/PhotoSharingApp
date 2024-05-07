@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "28012789071",
+    "project_id": "photosharingapp-fb3cb",
+    "storage_bucket": "photosharingapp-fb3cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28012789071:android:d59854231636504337593a",
+        "android_client_info": {
+          "package_name": "com.example.photosharingapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGCdQTNYCaq0oOEBVwYPbNbb6eT0dbQ_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
