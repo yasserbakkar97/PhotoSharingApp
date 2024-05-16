@@ -1,4 +1,4 @@
- package com.example.photosharingapp
+ package com.example.photosharingapp.view
 
 import android.content.Intent
 import android.os.Bundle

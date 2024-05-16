@@ -1,4 +1,4 @@
-package com.example.photosharingapp
+package com.example.photosharingapp.view
 
 import android.Manifest
 import android.content.Intent
@@ -16,8 +16,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.photosharingapp.databinding.ActivitySharingPhotoBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth

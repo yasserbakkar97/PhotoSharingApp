@@ -1,4 +1,4 @@
-package com.example.photosharingapp
+package com.example.photosharingapp.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +7,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.photosharingapp.model.Post
+import com.example.photosharingapp.R
 import com.example.photosharingapp.databinding.ActivityNewsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,6 +39,8 @@ class NewsActivity : AppCompatActivity() {
             } else{
                 if (value != null){
                     if (!value.isEmpty){
+
+                        postList.clear()
                         val documents = value.documents
                         for (document in documents){
                             val comment = document.get("userComment") as String
