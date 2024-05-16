@@ -7,8 +7,10 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.photosharingapp.model.Post
 import com.example.photosharingapp.R
+import com.example.photosharingapp.adapter.NewsActivityAdapter
 import com.example.photosharingapp.databinding.ActivityNewsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -18,7 +20,7 @@ class NewsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewsBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseFirestore
-
+    private lateinit var recyclerViewAdapter: NewsActivityAdapter
     var postList = ArrayList<Post>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +30,14 @@ class NewsActivity : AppCompatActivity() {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
+
+        getData()
+
+        var layoutManager = LinearLayoutManager(this)
+        binding.recyclerview.layoutManager = layoutManager
+        recyclerViewAdapter = NewsActivityAdapter(postList)
+        binding.recyclerview.adapter = recyclerViewAdapter
+
 
     }
     fun getData(){
@@ -50,6 +60,8 @@ class NewsActivity : AppCompatActivity() {
                             val post = Post(email, comment, downloadUrl)
                             postList.add(post)
                         }
+
+                        recyclerViewAdapter.notifyDataSetChanged()
                     }
                 }
             }

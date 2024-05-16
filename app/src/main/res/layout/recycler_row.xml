@@ -23,7 +23,7 @@
         android:layout_margin="5dp"/>
 
     <TextView
-        android:id="@+id/userComment"
+        android:id="@+id/tvUserComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="User Comment: "
