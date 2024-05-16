@@ -14,14 +14,14 @@
         android:layout_marginTop="71dp"
         android:layout_marginBottom="32dp"
         android:onClick="chooseImage"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText"
+        app:layout_constraintBottom_toTopOf="@+id/etComment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/add" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/etComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
@@ -41,7 +41,7 @@
         android:onClick="shareImage"
         android:text="Share"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText"
-        app:layout_constraintStart_toStartOf="@+id/editTextText"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintEnd_toEndOf="@+id/etComment"
+        app:layout_constraintStart_toStartOf="@+id/etComment"
+        app:layout_constraintTop_toBottomOf="@+id/etComment" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -18,9 +19,18 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.photosharingapp.databinding.ActivitySharingPhotoBinding
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import java.util.UUID
 
 class SharingPhotoActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySharingPhotoBinding
+    private lateinit var storage: FirebaseStorage
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseFirestore
+
     var imageUri: Uri? = null
     var imageBitmap: Bitmap? = null
 
@@ -30,11 +40,53 @@ class SharingPhotoActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
+        storage = FirebaseStorage.getInstance()
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseFirestore.getInstance()
+
+
     }
     fun shareImage(view: View) {
 
+        val uuid = UUID.randomUUID()
+        val imageName = "images/$uuid.jpg"
 
+        val reference = storage.reference
+        val visualReference = reference.child(imageName)
+
+        if (imageUri != null) {
+            visualReference.putFile(imageUri!!).addOnSuccessListener { taskSnapshot ->
+                val uploadedImageReference = FirebaseStorage.getInstance().reference.child(imageName)
+                uploadedImageReference.downloadUrl.addOnSuccessListener { uri ->
+                    val downloadUrl = uri.toString()
+                    val currentUserEmail = auth.currentUser!!.email.toString()
+                    val userComment = binding.etComment.text.toString()
+                    val date = Timestamp.now()
+                    //Database
+                    val postMap = hashMapOf<String, Any>()
+                    postMap.put("downloadUrl", downloadUrl)
+                    postMap.put("userEmail", currentUserEmail)
+                    postMap.put("userComment", userComment)
+                    postMap.put("date", date)
+
+                    database.collection("Post").add(postMap).addOnSuccessListener { task ->
+                        println("Post is uploaded")
+                        finish()
+                    }.addOnFailureListener { exception ->
+                        Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_LONG).show()
+                        println("Post upload failed: ${exception.message}")
+                    }
+
+                }
+            }.addOnFailureListener { exception ->
+                Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_LONG).show()
+                println("Image upload failed: ${exception.message}")
+            }
+        } else {
+            println("imageUri is null")
+        }
     }
+
     fun chooseImage(view: View) {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE ) != PackageManager.PERMISSION_GRANTED){
